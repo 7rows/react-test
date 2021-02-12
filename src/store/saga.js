@@ -1,4 +1,4 @@
-import {DELETE_ITEM, FETCH_DATA} from "./actionTypes";
+import {DELETE_ITEM, EDIT_ITEM, FETCH_DATA, UPDATE_ITEM} from "./actionTypes";
 import {fetchedData, updateItem} from "./actionCreators";
 import API from "../utils/API";
 import { all, call, takeEvery, select, put, fork } from 'redux-saga/effects';
@@ -26,7 +26,8 @@ function* deleteItem({value}) {
 
 function* editItem({value}) {
     try {
-        
+        const action = fetchedData(value)
+        yield put(action)
     }catch (e) {
         console.log("Can't edit item", e);
     }
@@ -46,6 +47,7 @@ function* update({value}) {
 function* saga() {
     yield all([
         takeEvery(FETCH_DATA, fetchData),
+        takeEvery(EDIT_ITEM, editItem)
     ])
 }
 

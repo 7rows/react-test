@@ -60,7 +60,7 @@ const TableEdit = ({ titles, data, canEdit, onClickEdit, onClickSave}) => {
         {data.map((item, index) => (
             <tr key={index}>
                 {titles.map((title, indexTitle) => (
-                    <td key={indexTitle}>{data[index]}{item[title]}</td>
+                    <td key={indexTitle}>{item[title]}</td>
                 ))}
                 {canEdit ? <td>
                     <button onClick={()=>onClickEdit(item)}>Edit</button>
