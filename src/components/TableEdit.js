@@ -41,38 +41,31 @@ const getTitlesForShow = (item, excludeTitles) => {
     return titleFromItem
 }
 
-const Table = ({ data, hideTitles, canEdit, onClickEdit }) => {
+const Table = ({ data, hideTitles, canEdit, onClickEdit, onClickSave }) => {
     const titles = getTitlesForShow(data[0], hideTitles)
-    return <TableEdit titles={titles} data={data} canEdit={canEdit || false} onClickEdit={onClickEdit}/>
+    return <TableEdit titles={titles} data={data} canEdit={canEdit || false} onClickEdit={onClickEdit} onClickSave={onClickSave}/>
 };
 
-const TableHeader = ({titles, canEdit}) => {
-    return         <thead>
-    <tr>
-        {titles.map((item, index) => (
-            <th key={index}>{item}</th>
-        ))}
-        {canEdit ? <th/> : ''}
-    </tr>
-    </thead>
-}
-
-const TableRow = ({item, index}) => {
-    return <tr> <td>{item.map((i,index)=>(<span key={index}>{i}</span>))}</td></tr>
-}
-
-const TableEdit = ({ titles, data, canEdit, onClickEdit}) => {
+const TableEdit = ({ titles, data, canEdit, onClickEdit, onClickSave}) => {
     return <StyledTable>
-        <TableHeader titles={titles} canEdit={canEdit}/>
+        <thead>
+        <tr>
+            {titles.map((item, index) => (
+                <th key={index}>{item}</th>
+            ))}
+            {canEdit ? <th/> : ''}
+        </tr>
+        </thead>
         <tbody>
         {data.map((item, index) => (
-            <TableRow item={item} index={index} key={`${index}_row`}/>
- /*           <tr key={index}>
-                {item.map((i, idxTd)=> <TableRow items={i} index={idxTd}/>)}
+            <tr key={index}>
+                {titles.map((title, indexTitle) => (
+                    <td key={indexTitle}>{data[index]}{item[title]}</td>
+                ))}
                 {canEdit ? <td>
                     <button onClick={()=>onClickEdit(item)}>Edit</button>
                 </td> : ''}
-            </tr>*/
+            </tr>
         ))}
         </tbody>
     </StyledTable>
